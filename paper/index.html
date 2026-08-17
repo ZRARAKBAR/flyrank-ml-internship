@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Google Search Ranking & Discoverability — ML Capstone</title>
+
+    <meta
+        name="description"
+        content="Machine learning capstone studying search-performance trends and content refresh prioritization using the FlyRank ML Internship dataset."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     SPLASH SCREEN
+========================================================= -->
+
+<div id="splash" class="splash-screen">
+
+    <div class="splash-orbit orbit-one"></div>
+    <div class="splash-orbit orbit-two"></div>
+    <div class="splash-orbit orbit-three"></div>
+
+    <div class="splash-content">
+
+        <div class="splash-mark">
+    <img src="figures/logo.png" alt="FlyRank">
+</div>
+
+        <p class="splash-label">
+            FLYRANK · MACHINE LEARNING CAPSTONE
+        </p>
+
+        <h1>
+            Google Search Ranking
+            <span>&amp; Discoverability</span>
+        </h1>
+
+        <p class="splash-subtitle">
+            A machine-learning study of Content Refresh Prioritization
+        </p>
+
+        <div class="splash-author">
+            <span>Research by</span>
+            <strong>Muhammad Zrar Akbar</strong>
+        </div>
+
+        <div class="loading-line">
+            <span></span>
+        </div>
+
+        <p class="splash-loading">
+            Preparing research paper...
+        </p>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     TOP NAVIGATION
+========================================================= -->
+
+<nav class="top-nav">
+
+    <div class="nav-inner">
+
+        <a href="#top" class="brand">
+    <span class="brand-icon">
+        <img src="figures/logo.png" alt="FlyRank">
+    </span>
+
+    <span class="brand-text">
+        <strong>FlyRank</strong>
+        <small>ML Capstone</small>
+    </span>
+</a>
+
+        <div class="nav-links">
+
+            <a href="#abstract">Abstract</a>
+            <a href="#introduction">Problem</a>
+            <a href="#data">Data</a>
+            <a href="#methodology">Method</a>
+            <a href="#results">Results</a>
+            <a href="#recommendations">Recommendations</a>
+            <a href="#reproducibility">Reproducibility</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<header id="top" class="hero">
+
+    <div class="hero-grid"></div>
+
+    <div class="container hero-content">
+
+        <div class="hero-badge">
+            <span class="status-dot"></span>
+            FLYRANK MACHINE LEARNING INTERNSHIP
+        </div>
+
+        <p class="hero-kicker">
+            SEARCH INTELLIGENCE · Content Refresh Prioritization
+        </p>
+
+        <h1>
+            Google Search Ranking
+            <span>&amp; Discoverability</span>
+        </h1>
+
+        <p class="hero-description">
+            Using machine learning to identify webpages that may deserve
+            content review or refresh based on observed search-performance
+            trends.
+        </p>
+
+        <div class="hero-meta">
+
+            <div>
+                <span>AUTHOR</span>
+                <strong>Muhammad Zrar Akbar</strong>
+            </div>
+
+            <div>
+                <span>TRACK</span>
+                <strong>Machine Learning</strong>
+            </div>
+
+            <div>
+                <span>PROJECT TYPE</span>
+                <strong>Capstone Research</strong>
+            </div>
+
+        </div>
+
+        <div class="hero-actions">
+
+            <a href="#abstract" class="primary-button">
+                Read the Research
+                <span>↓</span>
+            </a>
+
+            <a href="#reproducibility" class="secondary-button">
+                View Reproducibility
+            </a>
+
+        </div>
+
+        <div class="scroll-indicator">
+            <span></span>
+            Scroll to explore
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+
+<!-- =========================================================
+     ABSTRACT
+========================================================= -->
+
+<section id="abstract" class="paper-section intro-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">00</div>
+
+            <div>
+                <p class="section-kicker">EXECUTIVE SUMMARY</p>
+                <h2>Abstract</h2>
+            </div>
+
+        </div>
+
+
+        <div class="abstract-layout">
+
+            <div class="abstract-main reveal">
+
+                <p class="lead">
+                    Search-performance data can contain useful signals about
+                    which content deserves attention, but manually reviewing
+                    every webpage with equal priority is inefficient.
+                </p>
+
+                <p>
+                    This capstone investigates a machine-learning approach for
+                    prioritizing webpages according to observed
+                    search-performance trends. The central objective is to
+                    transform historical performance observations into a
+                    repeatable decision-support workflow that can identify
+                    content opportunities for human review.
+                </p>
+
+                <p>
+                    The workflow begins with dataset inspection and feature
+                    selection, followed by explicit leakage checks. Candidate
+                    features are designed around information relevant to the
+                    decision being made, while variables that could expose the
+                    target or evaluation-period information are excluded where
+                    applicable.
+                </p>
+
+                <p>
+                    A baseline is established before the trained model is
+                    evaluated. This provides an important reference point:
+                    model performance should be interpreted relative to a
+                    simpler alternative rather than considered in isolation.
+                </p>
+
+                <p>
+                    Finally, model predictions are transformed into ranked
+                    content opportunities. The ranking is intended to help an
+                    analyst decide where to investigate first; it is not
+                    presented as an automatic instruction to modify content.
+                </p>
+
+            </div>
+
+
+            <aside class="abstract-card reveal">
+
+                <span class="card-label">RESEARCH QUESTION</span>
+
+                <h3>
+                    Which webpages should be prioritized for content review or
+                    refresh based on observed search-performance trends?
+                </h3>
+
+                <div class="abstract-divider"></div>
+
+                <div class="mini-stat">
+                    <span>APPROACH</span>
+                    <strong>ML + Decision Support</strong>
+                </div>
+
+                <div class="mini-stat">
+                    <span>OUTPUT</span>
+                    <strong>Ranked Opportunities</strong>
+                </div>
+
+                <div class="mini-stat">
+                    <span>FRAMING</span>
+                    <strong>Directional, not causal</strong>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     INTRODUCTION
+========================================================= -->
+
+<section id="introduction" class="paper-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">01</div>
+
+            <div>
+                <p class="section-kicker">CONTEXT & DECISION</p>
+                <h2>Introduction &amp; Problem Statement</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-grid reveal">
+
+            <div>
+
+                <p>
+                    Search visibility is not static. A webpage can experience
+                    periods of growth, decline, recovery, or relative stability.
+                    From an operational perspective, this creates a prioritization
+                    problem: an analyst may have many webpages to review but
+                    limited time available for investigation.
+                </p>
+
+                <p>
+                    A useful search-intelligence system therefore does not need
+                    to make a final content decision automatically. Instead, it
+                    can help reduce the search space by identifying observations
+                    that deserve attention first.
+                </p>
+
+            </div>
+
+            <div>
+
+                <p>
+                    This project treats machine learning as a ranking and
+                    decision-support mechanism. The model learns patterns in the
+                    available training data and produces outputs that can be
+                    converted into a prioritized review list.
+                </p>
+
+                <p>
+                    This distinction is important. The project does not attempt
+                    to reverse-engineer Google's ranking algorithm, establish a
+                    causal relationship between a feature and ranking, or claim
+                    that refreshing a page will necessarily improve its future
+                    performance.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="question-card reveal">
+
+            <div class="question-icon">?</div>
+
+            <div>
+
+                <span>DECISION SUPPORTED BY THE PROJECT</span>
+
+                <h3>
+                    Which content should an analyst investigate first?
+                </h3>
+
+                <p>
+                    The answer is represented as a ranked set of model-supported
+                    opportunities rather than an automatic content-editing rule.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DATA
+========================================================= -->
+
+<section id="data" class="paper-section section-alt">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">02</div>
+
+            <div>
+                <p class="section-kicker">DATA FOUNDATION</p>
+                <h2>Data</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-grid reveal">
+
+            <div>
+
+                <p>
+                    The analysis uses the FlyRank ML Internship dataset as the
+                    underlying source for the modeling workflow. The dataset
+                    provides the observations required to investigate
+                    search-performance patterns and build a repeatable scoring
+                    process.
+                </p>
+
+                <p>
+                    Before modeling, the data was inspected to understand its
+                    structure and available fields. This initial stage is
+                    important because feature engineering should follow an
+                    understanding of the data rather than begin with arbitrary
+                    model inputs.
+                </p>
+
+            </div>
+
+            <div>
+
+                <p>
+                    The public paper deliberately avoids exposing client names,
+                    private queries, domains, URLs, credentials, raw exports,
+                    or other information that should not be published.
+                </p>
+
+                <p>
+                    The objective is to communicate the analytical methodology
+                    and evidence while keeping the underlying private or
+                    sensitive dataset details out of the public presentation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="figure-card reveal">
+
+            <div class="figure-header">
+                <span>FIGURE 01</span>
+                <span>DATA INSPECTION</span>
+            </div>
+
+            <div class="image-wrapper">
+
+                <img
+                    src="figures/figure1.png"
+                    alt="Initial dataset loading and dataset inspection"
+                    class="zoomable"
+                    loading="lazy"
+                >
+
+                <div class="image-overlay">
+                    <span class="zoom-icon">+</span>
+                    <strong>Click to view full size</strong>
+                    <small>Dataset loading & inspection</small>
+                </div>
+
+            </div>
+
+            <div class="caption">
+                <strong>Figure 1.</strong>
+                Initial data loading and dataset inspection.
+            </div>
+
+        </div>
+
+
+        <div class="info-grid reveal">
+
+            <div class="info-card">
+
+                <span class="info-number">01</span>
+
+                <h3>Inspect</h3>
+
+                <p>
+                    Understand the available observations, fields, and data
+                    structure before modeling.
+                </p>
+
+            </div>
+
+            <div class="info-card">
+
+                <span class="info-number">02</span>
+
+                <h3>Filter</h3>
+
+                <p>
+                    Exclude information that is inappropriate for the public
+                    research presentation.
+                </p>
+
+            </div>
+
+            <div class="info-card">
+
+                <span class="info-number">03</span>
+
+                <h3>Prepare</h3>
+
+                <p>
+                    Construct a modeling dataset appropriate for feature
+                    engineering and evaluation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURES
+========================================================= -->
+
+<section id="features" class="paper-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">03</div>
+
+            <div>
+                <p class="section-kicker">FEATURE DESIGN</p>
+                <h2>Feature Engineering &amp; Leakage Control</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-grid reveal">
+
+            <div>
+
+                <p>
+                    Feature engineering translates the raw analytical data into
+                    variables that a machine-learning model can use. The goal is
+                    not simply to maximize the number of available variables,
+                    but to construct features that represent information
+                    available at the time the prioritization decision would be
+                    made.
+                </p>
+
+                <p>
+                    This makes feature selection a modeling decision as well as
+                    a data-quality decision.
+                </p>
+
+            </div>
+
+            <div>
+
+                <p>
+                    Leakage is particularly important in trend-prediction tasks.
+                    A variable that directly or indirectly contains future
+                    information can make evaluation results look stronger than
+                    they would be in a real deployment scenario.
+                </p>
+
+                <p>
+                    For this reason, potential target-revealing or
+                    evaluation-period information was excluded where applicable.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="figure-card reveal">
+
+            <div class="figure-header">
+                <span>FIGURE 02</span>
+                <span>FEATURE SELECTION</span>
+            </div>
+
+            <div class="image-wrapper">
+
+                <img
+                    src="figures/figure2.png"
+                    alt="Feature selection and leakage exclusion"
+                    class="zoomable"
+                    loading="lazy"
+                >
+
+                <div class="image-overlay">
+                    <span class="zoom-icon">+</span>
+                    <strong>Click to view full size</strong>
+                    <small>Feature selection & leakage control</small>
+                </div>
+
+            </div>
+
+            <div class="caption">
+                <strong>Figure 2.</strong>
+                Feature selection and exclusion of potential leakage variables.
+            </div>
+
+        </div>
+
+
+        <div class="principle-box reveal">
+
+            <span class="principle-label">CORE PRINCIPLE</span>
+
+            <h3>
+                A model should only use information that would realistically be
+                available when the prioritization decision is made.
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BASELINE
+========================================================= -->
+
+<section id="baseline" class="paper-section section-alt">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">04</div>
+
+            <div>
+                <p class="section-kicker">REFERENCE MODEL</p>
+                <h2>Baseline</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-wide reveal">
+
+            <p>
+                A baseline establishes the reference point for model evaluation.
+                Without a baseline, a model's metric has limited meaning because
+                there is no indication of how much value the additional
+                modeling complexity provides.
+            </p>
+
+            <p>
+                The baseline output is evaluated using the same general
+                evaluation framework applied to the trained model. This keeps
+                the comparison more meaningful because differences in
+                performance are not simply caused by different evaluation
+                conditions.
+            </p>
+
+        </div>
+
+
+        <div class="figure-grid two reveal">
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>FIGURE 03A</span>
+                    <span>BASELINE</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure3(a).png"
+                        alt="Baseline setup and output"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Baseline output</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 3(a).</strong>
+                    Baseline setup and output.
+                </div>
+
+            </div>
+
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>FIGURE 03B</span>
+                    <span>BASELINE EVALUATION</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure3(b).png"
+                        alt="Baseline evaluation"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Baseline evaluation</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 3(b).</strong>
+                    Baseline evaluation output.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="note-card reveal">
+
+            <strong>How to read the baseline</strong>
+
+            <p>
+                The baseline is not intended to be the final solution. It acts
+                as the reference condition against which the additional
+                predictive structure of the machine-learning approach can be
+                assessed.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     METHODOLOGY
+========================================================= -->
+
+<section id="methodology" class="paper-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">05</div>
+
+            <div>
+                <p class="section-kicker">MODEL DEVELOPMENT</p>
+                <h2>Methodology</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-grid reveal">
+
+            <div>
+
+                <p>
+                    After data preparation and feature selection, the selected
+                    variables were passed into the machine-learning workflow.
+                    The modeling stage transforms the prepared observations
+                    into a predictive representation of the target trend.
+                </p>
+
+                <p>
+                    The model is evaluated against a held-out evaluation
+                    framework rather than only against its training output.
+                    This is important because strong performance on training
+                    observations alone does not demonstrate generalization.
+                </p>
+
+            </div>
+
+            <div>
+
+                <p>
+                    The final pipeline connects four major stages: data
+                    preparation, feature construction, model training, and
+                    evaluation. The output is then passed into a prioritization
+                    layer that translates model predictions into actionable
+                    review ordering.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="figure-card reveal">
+
+            <div class="figure-header">
+                <span>FIGURE 04</span>
+                <span>MODEL TRAINING</span>
+            </div>
+
+            <div class="image-wrapper">
+
+                <img
+                    src="figures/figure4.png"
+                    alt="Machine learning model definition and training"
+                    class="zoomable"
+                    loading="lazy"
+                >
+
+                <div class="image-overlay">
+                    <span class="zoom-icon">+</span>
+                    <strong>Click to view full size</strong>
+                    <small>Model definition & training</small>
+                </div>
+
+            </div>
+
+            <div class="caption">
+                <strong>Figure 4.</strong>
+                Model definition and training procedure.
+            </div>
+
+        </div>
+
+
+        <div class="method-grid reveal">
+
+            <div class="method-card">
+
+                <span class="method-icon">01</span>
+
+                <h3>Research Question</h3>
+
+                <p>
+                    Identify webpages that should receive review priority based
+                    on observed search-performance trends.
+                </p>
+
+            </div>
+
+
+            <div class="method-card">
+
+                <span class="method-icon">02</span>
+
+                <h3>Target</h3>
+
+                <p>
+                    Observed search-performance trend direction used as the
+                    modeling target.
+                </p>
+
+            </div>
+
+
+            <div class="method-card">
+
+                <span class="method-icon">03</span>
+
+                <h3>Validation</h3>
+
+                <p>
+                    Evaluate the trained model on information separated from
+                    model fitting and compare it against the baseline.
+                </p>
+
+            </div>
+
+
+            <div class="method-card">
+
+                <span class="method-icon">04</span>
+
+                <h3>Final Output</h3>
+
+                <p>
+                    Convert model predictions into ranked content opportunities
+                    for human review.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESULTS
+========================================================= -->
+
+<section id="results" class="paper-section section-alt">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">06</div>
+
+            <div>
+                <p class="section-kicker">MODEL EVALUATION</p>
+                <h2>Results</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-wide reveal">
+
+            <p>
+                The final model was evaluated using the same evaluation
+                framework used for the baseline. The figures in this section
+                document the evaluation outputs generated by the modeling
+                workflow.
+            </p>
+
+            <p>
+                Rather than relying on a single number, the evaluation is
+                considered from multiple perspectives. Aggregate evaluation
+                metrics provide a high-level view of performance, while the
+                confusion matrix and error-analysis outputs help reveal where
+                predictions align with or differ from the observed target.
+            </p>
+
+        </div>
+
+
+        <div class="figure-grid three reveal">
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>05A</span>
+                    <span>EVALUATION</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure5(a).png"
+                        alt="Final model evaluation metric"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Final evaluation</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 5(a).</strong>
+                    Final model evaluation output.
+                </div>
+
+            </div>
+
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>05B</span>
+                    <span>METRICS</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure5(b).png"
+                        alt="Final model evaluation metrics"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Evaluation metrics</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 5(b).</strong>
+                    Model evaluation metrics.
+                </div>
+
+            </div>
+
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>05C</span>
+                    <span>PERFORMANCE</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure5(c).png"
+                        alt="Final model performance output"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Additional evaluation evidence</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 5(c).</strong>
+                    Additional final evaluation output.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="subsection-heading reveal">
+
+            <span>ERROR ANALYSIS</span>
+
+            <h3>Understanding model mistakes</h3>
+
+        </div>
+
+
+        <p class="prose-wide reveal">
+            Aggregate performance does not explain every model decision.
+            Error analysis therefore provides a second layer of evaluation by
+            examining the distribution of correct and incorrect predictions.
+            This is especially relevant for a prioritization system because
+            different types of prediction errors may lead to different review
+            priorities.
+        </p>
+
+
+        <div class="figure-grid two reveal">
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>06A</span>
+                    <span>CONFUSION MATRIX</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure6(a).png"
+                        alt="Confusion matrix for the final model"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Confusion matrix</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 6(a).</strong>
+                    Confusion matrix for the final model.
+                </div>
+
+            </div>
+
+
+            <div class="figure-card">
+
+                <div class="figure-header">
+                    <span>06B</span>
+                    <span>ERROR ANALYSIS</span>
+                </div>
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="figures/figure6(b).png"
+                        alt="Model error analysis"
+                        class="zoomable"
+                        loading="lazy"
+                    >
+
+                    <div class="image-overlay">
+                        <span class="zoom-icon">+</span>
+                        <strong>Click to view full size</strong>
+                        <small>Error analysis</small>
+                    </div>
+
+                </div>
+
+                <div class="caption">
+                    <strong>Figure 6(b).</strong>
+                    Error-analysis output.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURE IMPORTANCE
+========================================================= -->
+
+<section id="importance" class="paper-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">07</div>
+
+            <div>
+                <p class="section-kicker">MODEL INTERPRETATION</p>
+                <h2>Feature Importance</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-grid reveal">
+
+            <div>
+
+                <p>
+                    Feature importance provides a model-level view of which
+                    inputs contributed most strongly to the learned predictions.
+                    This can make the model easier to inspect and can help
+                    analysts understand which available signals deserve
+                    attention when reviewing a prediction.
+                </p>
+
+            </div>
+
+            <div>
+
+                <p>
+                    However, importance should not be confused with causality.
+                    A feature receiving high model importance means that it was
+                    useful within the learned predictive relationship. It does
+                    not demonstrate that changing that feature will cause a
+                    change in Google search performance.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="figure-card feature-importance-card reveal">
+
+            <div class="figure-header">
+                <span>FIGURE 07</span>
+                <span>MODEL INTERPRETATION</span>
+            </div>
+
+            <div class="image-wrapper">
+
+                <img
+                    src="figures/figure7.png"
+                    alt="Feature importance from the trained model"
+                    class="zoomable"
+                    loading="lazy"
+                >
+
+                <div class="image-overlay">
+                    <span class="zoom-icon">+</span>
+                    <strong>Click to view full size</strong>
+                    <small>Feature importance</small>
+                </div>
+
+            </div>
+
+            <div class="caption">
+                <strong>Figure 7.</strong>
+                Feature-importance output from the trained model.
+            </div>
+
+        </div>
+
+
+        <div class="interpretation-box reveal">
+
+            <span>INTERPRETATION RULE</span>
+
+            <h3>
+                Predictive importance is evidence about the model's behavior,
+                not evidence about Google's ranking mechanism.
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RECOMMENDATIONS
+========================================================= -->
+
+<section id="recommendations" class="paper-section section-dark">
+
+    <div class="container">
+
+        <div class="section-heading light reveal">
+
+            <div class="section-number">08</div>
+
+            <div>
+                <p class="section-kicker">DECISION SUPPORT</p>
+                <h2>Ranked Recommendations</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-wide light-prose reveal">
+
+            <p>
+                The final stage converts model predictions into a prioritization
+                workflow. Instead of presenting the model output as a raw
+                classification result, the predictions are organized so that
+                analysts can investigate higher-priority observations first.
+            </p>
+
+            <p>
+                This creates a practical bridge between machine-learning output
+                and content operations. The model does not replace editorial
+                judgment; it helps determine where that judgment can be applied
+                first.
+            </p>
+
+        </div>
+
+
+        <div class="figure-gallery reveal">
+
+            <div class="gallery-intro">
+
+                <span>FINAL OUTPUT GALLERY</span>
+
+                <h3>
+                    From model predictions to content-prioritization evidence
+                </h3>
+
+                <p>
+                    Select any figure to inspect the full-resolution output.
+                </p>
+
+            </div>
+
+
+            <div class="gallery-grid">
+
+                <div class="gallery-item">
+                    <img src="figures/figure8(a).png"
+                         alt="Final prioritization output"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(a)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <img src="figures/figure8(b).png"
+                         alt="Ranked prediction output"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(b)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <img src="figures/figure8(c).png"
+                         alt="Content opportunity ranking"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(c)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <img src="figures/figure8(d).png"
+                         alt="Prediction and prioritization results"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(d)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <img src="figures/figure8(e).png"
+                         alt="Ranked recommendations"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(e)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <img src="figures/figure8(f).png"
+                         alt="Recommendation evidence"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(f)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item gallery-wide">
+                    <img src="figures/figure8(g).png"
+                         alt="Final content prioritization"
+                         class="zoomable">
+                    <div class="gallery-overlay">
+                        <strong>Figure 8(g)</strong>
+                        <span>Click to inspect</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="playbook reveal">
+
+            <div class="playbook-title">
+
+                <span>ACTION PLAYBOOK</span>
+
+                <h3>
+                    How the ranked output should be used
+                </h3>
+
+            </div>
+
+
+            <div class="playbook-item">
+
+                <span>01</span>
+
+                <div>
+                    <h4>Review high-priority opportunities</h4>
+
+                    <p>
+                        Begin investigation with the observations receiving
+                        the strongest prioritization signal.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="playbook-item">
+
+                <span>02</span>
+
+                <div>
+                    <h4>Inspect supporting signals</h4>
+
+                    <p>
+                        Examine the available feature evidence and model
+                        context before deciding whether further investigation
+                        is warranted.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="playbook-item">
+
+                <span>03</span>
+
+                <div>
+                    <h4>Apply human judgment</h4>
+
+                    <p>
+                        Treat the model as decision support rather than an
+                        automatic content-editing system.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="playbook-item">
+
+                <span>04</span>
+
+                <div>
+                    <h4>Monitor subsequent observations</h4>
+
+                    <p>
+                        Reassess the prioritization as additional
+                        search-performance observations become available.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LIMITATIONS
+========================================================= -->
+
+<section id="limitations" class="paper-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">09</div>
+
+            <div>
+                <p class="section-kicker">HONEST FRAMING</p>
+                <h2>Limitations</h2>
+            </div>
+
+        </div>
+
+
+        <div class="limitations-intro reveal">
+
+            <p>
+                The usefulness of a machine-learning model depends on how its
+                outputs are interpreted. The following limitations define the
+                boundaries of the claims that can reasonably be made from this
+                analysis.
+            </p>
+
+        </div>
+
+
+        <div class="limitations-grid reveal">
+
+            <div>
+                <span>01</span>
+                <h3>Not causal evidence</h3>
+                <p>
+                    The model identifies patterns in the available data. It
+                    does not establish causal effects on Google's ranking
+                    system.
+                </p>
+            </div>
+
+
+            <div>
+                <span>02</span>
+                <h3>Directional signal</h3>
+                <p>
+                    Predictions should be interpreted as directional
+                    decision-support signals rather than guaranteed outcomes.
+                </p>
+            </div>
+
+
+            <div>
+                <span>03</span>
+                <h3>Model-specific importance</h3>
+                <p>
+                    Feature importance describes the learned model relationship
+                    and should not be treated as proof of a ranking mechanism.
+                </p>
+            </div>
+
+
+            <div>
+                <span>04</span>
+                <h3>Human review required</h3>
+                <p>
+                    Model recommendations should be reviewed before any
+                    content changes are considered.
+                </p>
+            </div>
+
+
+            <div>
+                <span>05</span>
+                <h3>Distribution changes</h3>
+                <p>
+                    Model behavior may change when applied to different periods,
+                    datasets, or content populations.
+                </p>
+            </div>
+
+
+            <div>
+                <span>06</span>
+                <h3>Data constraints</h3>
+                <p>
+                    The analysis is bounded by the variables, observations, and
+                    data quality available in the internship dataset.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     REPRODUCIBILITY
+========================================================= -->
+
+<section id="reproducibility" class="paper-section section-alt">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">10</div>
+
+            <div>
+                <p class="section-kicker">RESEARCH TRANSPARENCY</p>
+                <h2>Reproducibility</h2>
+            </div>
+
+        </div>
+
+
+        <div class="prose-grid reveal">
+
+            <div>
+
+                <p>
+                    Reproducibility connects the public research paper to the
+                    computational workflow that produced its evidence.
+                </p>
+
+                <p>
+                    The capstone notebook contains the data-processing,
+                    feature-engineering, modeling, evaluation, and final
+                    prioritization workflow.
+                </p>
+
+            </div>
+
+            <div>
+
+                <p>
+                    The final notebook execution was captured as evidence that
+                    the workflow completed successfully and produced the outputs
+                    referenced throughout this paper.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="figure-card wide reveal">
+
+            <div class="figure-header">
+                <span>FIGURE 09</span>
+                <span>REPRODUCIBILITY EVIDENCE</span>
+            </div>
+
+            <div class="image-wrapper">
+
+                <img
+                    src="figures/figure 9.png"
+                    alt="Final reproducible notebook run"
+                    class="zoomable"
+                    loading="lazy"
+                >
+
+                <div class="image-overlay">
+                    <span class="zoom-icon">+</span>
+                    <strong>Click to view full size</strong>
+                    <small>Final notebook execution</small>
+                </div>
+
+            </div>
+
+            <div class="caption">
+                <strong>Figure 9.</strong>
+                Final reproducible notebook run producing the reported model
+                and evaluation outputs.
+            </div>
+
+        </div>
+
+
+        <div class="resource-links reveal">
+
+            <a
+                href="../work/"
+                class="resource-button"
+                target="_blank"
+                rel="noopener"
+            >
+                <span>01</span>
+                <div>
+                    <strong>View Work / Notebooks</strong>
+                    <small>Open the project notebook directory</small>
+                </div>
+                <b>↗</b>
+            </a>
+
+
+            <a
+                href="https://github.com/"
+                class="resource-button"
+                target="_blank"
+                rel="noopener"
+            >
+                <span>02</span>
+                <div>
+                    <strong>Repository</strong>
+                    <small>Open the GitHub project repository</small>
+                </div>
+                <b>↗</b>
+            </a>
+
+        </div>
+
+
+        <div class="repro-note reveal">
+
+            <span>REPRODUCIBILITY CHAIN</span>
+
+            <div class="chain">
+
+                <strong>Dataset</strong>
+                <i>→</i>
+                <strong>Features</strong>
+                <i>→</i>
+                <strong>Model</strong>
+                <i>→</i>
+                <strong>Evaluation</strong>
+                <i>→</i>
+                <strong>Ranking</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ACKNOWLEDGMENTS
+========================================================= -->
+
+<section id="acknowledgments" class="paper-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">11</div>
+
+            <div>
+                <p class="section-kicker">DATA CREDIT</p>
+                <h2>Acknowledgments</h2>
+            </div>
+
+        </div>
+
+
+        <div class="acknowledgment-card reveal">
+
+           <div class="ack-mark">
+    <img src="figures/logo.png" alt="FlyRank">
+</div>
+
+            <div>
+
+                <p class="ack-title">
+                    FlyRank Machine Learning Internship
+                </p>
+
+                <h3>
+                    Built on the FlyRank ML Internship dataset.
+                </h3>
+
+                <p>
+                    This project was completed as part of the FlyRank Machine
+                    Learning Internship. The public presentation follows the
+                    capstone's public-safety requirements and intentionally
+                    avoids publishing client names, private queries,
+                    credentials, raw exports, or claims that establish
+                    Google's ranking algorithm.
+                </p>
+
+                <a
+                    href="https://flyrank.ai"
+                    target="_blank"
+                    rel="noopener"
+                    class="flyrank-link"
+                >
+                    Visit FlyRank ↗
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <strong>
+                Google Search Ranking &amp; Discoverability
+            </strong>
+
+            <p>
+                Machine Learning Capstone · FlyRank Internship
+            </p>
+
+        </div>
+
+
+        <div class="footer-author">
+
+            <span>Research by</span>
+
+            <strong>
+                Muhammad Zrar Akbar
+            </strong>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     IMAGE LIGHTBOX
+========================================================= -->
+
+<div id="lightbox" class="lightbox">
+
+    <button
+        class="lightbox-close"
+        aria-label="Close image viewer"
+    >
+        ×
+    </button>
+
+    <button
+        class="lightbox-prev"
+        aria-label="Previous image"
+    >
+        ‹
+    </button>
+
+    <div class="lightbox-content">
+
+        <img
+            id="lightbox-image"
+            src=""
+            alt=""
+        >
+
+        <div class="lightbox-caption">
+            <strong id="lightbox-title"></strong>
+            <span id="lightbox-description"></span>
+        </div>
+
+    </div>
+
+    <button
+        class="lightbox-next"
+        aria-label="Next image"
+    >
+        ›
+    </button>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
