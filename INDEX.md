@@ -12,7 +12,7 @@
 - Week 7 — Action Playbook: https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
 
 ## Capstone
-- Capstone notebook: [capstone.ipynb](link)
+- Capstone notebook: [capstone.ipynb]( https://github.com/ZRARAKBAR/flyrank-ml-internship/blob/main/work/notebooks/capstone.ipynb)
 - Capstone README: [README.md](link)
 - Capstone demo video: https://youtu.be/CoyKxLNQiPI
 
