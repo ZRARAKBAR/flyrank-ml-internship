@@ -1,15 +1,15 @@
 # FlyRank ML Internship — Full Track Index
 
 ## Weekly Notebooks
-- Week 1 — Research Question: [w01_research_question.ipynb](link)
-- Week 2 — ML Task Framing: [w02_ml_task_framing.ipynb](link)
-- Week 3 — Data Contract: [w03_data_contract.ipynb](link)
-- Week 3 — Feature Leakage Check: [w03_feature_leakage_check.ipynb](link)
-- Week 4 — Baseline Score: [w04_baseline_score.ipynb](link)
-- Week 4 — Signal Audit: [w04_signal_audit.ipynb](link)
-- Week 5 — Model: [w05_model.ipynb](link)
-- Week 6 — Validation Audit: [w06_validation_audit.ipynb](link)
-- Week 7 — Action Playbook: [w07_action_playbook.ipynb](link)
+- Week 1 — Research Question:(https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks)
+- Week 2 — ML Task Framing:  https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 3 — Data Contract: https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 3 — Feature Leakage Check: https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 4 — Baseline Score:  https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 4 — Signal Audit:  https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 5 — Model: https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 6 — Validation Audit:  https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
+- Week 7 — Action Playbook: https://github.com/ZRARAKBAR/flyrank-ml-internship/tree/main/work/notebooks
 
 ## Capstone
 - Capstone notebook: [capstone.ipynb](link)
