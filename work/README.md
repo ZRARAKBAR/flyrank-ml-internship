@@ -1,54 +1,96 @@
-# work/ — your space
+ # Content Refresh Prioritization — FlyRank ML Internship Capstone
 
-Everything you build lives here: lane experiments, notebooks, figures, and your capstone
-report. The rest of the repo is the shared reference; this folder is yours.
+## What it does and for whom
 
-## Rules of the road
+This project ranks webpages by "decline risk" so a content or SEO team with
+limited review time knows which pages to check first. It's built for content
+teams managing large sites who can't manually review every page.
 
-1. **Copy, don't edit.** Need to change the pipeline? Copy the script here
-   (e.g. `work/scripts/03_train_model_v2.py`) or adjust the feature lists in
-   `scripts/ml_utils.py`. The reference pipeline in `scripts/` stays pristine — it's the
-   baseline you compare against, and reviewers expect to find it unchanged.
-2. **No datasets in git.** CSVs inside `work/` are gitignored, and CI fails if any dataset
-   CSV is committed anywhere in the repo. Small summary tables belong in your report as
-   markdown, not as data files.
-3. **Stay reproducible.** Fix your random seeds and note them in your report. Someone with a
-   fresh clone should be able to re-run your work from your instructions alone.
-4. **Public-safety language.** Everything here may end up public with your submission:
-   observed / measured / directional / decision-support — no client-identifying details,
-   no causal claims without a design (see `DATA_USE.md`).
+It does not predict Google's ranking algorithm and does not automatically
+publish, edit, or delete content. It produces a prioritized list for a human
+reviewer.
 
-## Suggested layout
+## Setup a stranger could follow
 
-```text
-work/
-  notebooks/            your experiment notebooks
-  scripts/              copied + modified pipeline pieces
-  figures/              charts for your report
-  capstone_report.md    your capstone write-up (start from the template)
-```
+1. Clone the repo:
 
-## Capstone
+git clone https://github.com/ZRARAKBAR/flyrank-ml-internship
+cd flyrank-ml-internship
 
-Copy `capstone_report_template.md` to `capstone_report.md` and fill it in as you go — it
-mirrors the eight axes your work is graded on, so writing it early keeps you honest.
+2. Install dependencies:
 
-## Your assignment index
+pip install pandas numpy scikit-learn matplotlib
 
-Your skeleton notebooks are already in `notebooks/` — one per assignment, pre-named.
-Tick them off as you go; this table is the map of your work:
+3. Place the dataset `content_refresh_anonymized.csv` in the expected path
+   (`/content/content_refresh_anonymized.csv` if running in Google Colab, or
+   update `DATA_PATH` in the notebook to your local path).
+4. Open `work/notebooks/capstone.ipynb` in Jupyter or Google Colab.
+5. Run all cells top to bottom (Runtime → Run all).
 
-| Notebook | Assignment | Status |
-|---|---|---|
-| `notebooks/w01_research_question.ipynb` | ML-02 | ☐ |
-| `notebooks/w02_ml_task_framing.ipynb` | ML-03 | ☐ |
-| `notebooks/w03_data_contract.ipynb` | ML-04 | ☐ |
-| `notebooks/w03_feature_leakage_check.ipynb` | ML-05 | ☐ |
-| `notebooks/w04_signal_audit.ipynb` | ML-06 | ☐ |
-| `notebooks/w04_baseline_score.ipynb` | ML-07 | ☐ |
-| `notebooks/w05_model.ipynb` | ML-08 | ☐ |
-| `notebooks/w06_validation_audit.ipynb` | ML-09 | ☐ |
-| `notebooks/w07_action_playbook.ipynb` | ML-10 | ☐ |
-| `notebooks/capstone.ipynb` | ML-11 (the paper mirrors it) | ☐ |
+## Usage example
 
-When your paper is deployed, put its exact URL in `../submission/paper_url.txt` (one line).
+Running the notebook end to end produces:
+- A ranked action queue: `work/outputs/capstone_ranked_action_queue.csv`
+- A metrics receipt: `work/outputs/capstone_metrics_receipt.json`
+- Feature importance and confusion matrix CSVs in `work/outputs/`
+- Charts saved to `work/figures/`
+
+Each row in the ranked queue includes a `decline_risk_score`, an `action_tier`
+(Priority review / Review / Monitor / Lower priority), and a human-readable
+`reason_codes` field (e.g. `HIGH_DECLINE_RISK|LOW_CTR`).
+
+## Architecture (simple sketch)
+
+Raw CSV (30,000 pages, 44 columns)
+↓
+Leakage-safe feature prep (drop trend_direction, trend_pct, IDs, 30-day fields)
+↓
+Grouped train/test split by client_id (25 train clients / 7 test clients)
+↓
+Rule-based baseline | Random Forest (200 trees)
+↓
+Evaluation on same held-out clients
+↓
+Final model trained on all data → decline-risk scores
+↓
+Action tiers + reason codes → ranked action queue (CSV export)
+
+
+## Evaluation results (from a fresh notebook run)
+
+| Metric    | Rule-based baseline | Random Forest |
+|-----------|---------------------|----------------|
+| Accuracy  | 48.9%                | 57.2%          |
+| Precision | 0.0                  | 0.577          |
+| Recall    | 0.0                  | 0.613          |
+| F1        | 0.0                  | 0.594          |
+
+Declining-class base rate in the dataset: 54.21%.
+Validation: grouped by client (no client appears in both train and test).
+
+## Limitations
+
+- This is observational historical data, not a controlled experiment — the
+  model does not prove causation.
+- A high decline-risk score does not guarantee a page will keep declining.
+- Refreshing a flagged page is not guaranteed to improve its search
+  performance.
+- The model does not reveal or prove Google's ranking algorithm.
+- Results should be described using careful language: observed, measured,
+  directional, decision-support — never "causes," "guarantees," or "proves
+  a ranking factor."
+- The model should never be used to auto-publish, auto-delete, or auto-edit
+  content. It is a prioritization aid for human review only.
+
+## AI use disclosure
+
+I built this project's structure, code drafting, notebook skeleton, and
+video/README scripting with the help of Claude (Anthropic). I personally
+verified all evaluation numbers against fresh notebook reruns, checked the
+leakage-exclusion logic myself, wrote the interpretation and limitations
+sections in my own words, and confirmed the grouped-validation split
+behaves correctly before including any result in this report.
+
+## Demo Video
+
+Watch the 3–5 minute live demo here: https://youtu.be/CoyKxLNQiPI
