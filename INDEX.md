@@ -13,7 +13,7 @@
 
 ## Capstone
 - Capstone notebook: [capstone.ipynb]( https://github.com/ZRARAKBAR/flyrank-ml-internship/blob/main/work/notebooks/capstone.ipynb)
-- Capstone README: [README.md](link)
+- Capstone README: [README.md](https://github.com/ZRARAKBAR/flyrank-ml-internship/blob/main/work/README.md)
 - Capstone demo video: https://youtu.be/CoyKxLNQiPI
 
 ## Final Package (FL-10)
